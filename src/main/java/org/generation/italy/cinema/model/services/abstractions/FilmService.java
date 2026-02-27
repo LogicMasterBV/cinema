@@ -10,24 +10,23 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FilmService {
-    // restituisce tutti i film presenti
     List<Film> findFilmAll();
-    //ricerca tramite id
+
     Optional<Film> findFilmById(int id);
-    //cancellare un film
+
     boolean deleteFilmById(int id);
-    // creazione film
-    Film createFilm(Film film);
-    // ricerca per titolo ma con contains
-    List<Film> findFilmByTitle(String title);
-    // modifica film
+
     boolean updateFilmById(int id);
-    // ricerca per genere --repo
-    List<Film> findFilmByGenre(Genre genre);
-    //ricerca per attore --repo
-    List<Film> findFilmByActor(Actor actor);
-    //ricerca per regista --repo
-    List<Film> findFilmByDirector(Director director);
-    //film che sono disponibili per data -> proiezione --repo
+
+    Film createFilm(Film film);
+
+    List<Film> findFilmByTitle(String title);
+
+    List<Film> findFilmByGenre(String genreId);
+
+    List<Film> findFilmByActor(String actorId);
+
+    List<Film> findFilmByDirector(String director);
+
     List<Film> findFilmByDateScreening(LocalDate date);
 }
