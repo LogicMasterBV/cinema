@@ -39,7 +39,7 @@ public class Booking {
     @OneToMany(mappedBy = "booking",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<BookingService> bookingServices = new ArrayList<>();
+    private List<BookedService> bookedServices = new ArrayList<>();
 
     public Booking() {
     }
@@ -58,13 +58,13 @@ public class Booking {
         ticket.setBooking(null);
     }
 
-    public void addBookingService(BookingService service) {
-        bookingServices.add(service);
+    public void addBookingService(BookedService service) {
+        bookedServices.add(service);
         service.setBooking(this);
     }
 
-    public void removeBookingService(BookingService service) {
-        bookingServices.remove(service);
+    public void removeBookingService(BookedService service) {
+        bookedServices.remove(service);
         service.setBooking(null);
     }
 
@@ -123,12 +123,12 @@ public class Booking {
         this.tickets = tickets;
     }
 
-    public List<BookingService> getBookingServices() {
-        return bookingServices;
+    public List<BookedService> getBookingServices() {
+        return bookedServices;
     }
 
-    public void setBookingServices(List<BookingService> bookingServices) {
-        this.bookingServices = bookingServices;
+    public void setBookingServices(List<BookedService> bookedServices) {
+        this.bookedServices = bookedServices;
     }
 }
 
