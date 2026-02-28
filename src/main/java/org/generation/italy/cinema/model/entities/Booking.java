@@ -2,6 +2,7 @@ package org.generation.italy.cinema.model.entities;
 
 
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,36 +28,107 @@ public class Booking {
     @Column(name = "total_price", precision = 10, scale = 2, nullable = false)
     private BigDecimal totalPrice;
 
-    @Column(name = "booking_date", insertable = false, updatable = false)
+    @Column(name = "booking_date", nullable = false, updatable = false)
     private LocalDateTime bookingDate;
 
-    @OneToMany(mappedBy = "booking")
+    @OneToMany(mappedBy = "booking", // @OneToMany (mappedby ...) -> significa "io non gestisco la relazione, la gestisce l'altro lato". Booking non scrive nel DB, sarà ticket a scriverci --> // --------------------BIDIREZIONALE CON TICKET
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "booking",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<BookingService> bookingServices = new ArrayList<>();
 
-    public Booking() {}
+    public Booking() {
+    }
 
-    // getters/setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    // ===== SINCRONIZZAZIONE RELAZIONE =====
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    // Metodo necessario per sincronizzare entrambi i lati della relazione bidirezionale,
+    // perché il lato owner (Ticket) è quello che gestisce la foreign key nel database.
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+        ticket.setBooking(this);
+    }
 
-    public Screening getScreening() { return screening; }
-    public void setScreening(Screening screening) { this.screening = screening; }
+    public void removeTicket(Ticket ticket) {
+        tickets.remove(ticket);
+        ticket.setBooking(null);
+    }
 
-    public BigDecimal getTotalPrice() { return totalPrice; }
-    public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice = totalPrice; }
+    public void addBookingService(BookingService service) {
+        bookingServices.add(service);
+        service.setBooking(this);
+    }
 
-    public LocalDateTime getBookingDate() { return bookingDate; }
-    public void setBookingDate(LocalDateTime bookingDate) { this.bookingDate = bookingDate; }
+    public void removeBookingService(BookingService service) {
+        bookingServices.remove(service);
+        service.setBooking(null);
+    }
 
-    public List<Ticket> getTickets() { return tickets; }
-    public void setTickets(List<Ticket> tickets) { this.tickets = tickets; }
+    @PrePersist
+    public void prePersist() {
+        bookingDate = LocalDateTime.now();
+    }
 
-    public List<BookingService> getBookingServices() { return bookingServices; }
-    public void setBookingServices(List<BookingService> bookingServices) { this.bookingServices = bookingServices; }
+    // getters/setters normali
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Screening getScreening() {
+        return screening;
+    }
+
+    public void setScreening(Screening screening) {
+        this.screening = screening;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public LocalDateTime getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(LocalDateTime bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public List<BookingService> getBookingServices() {
+        return bookingServices;
+    }
+
+    public void setBookingServices(List<BookingService> bookingServices) {
+        this.bookingServices = bookingServices;
+    }
 }
+

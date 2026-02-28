@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +51,7 @@ public class FilmService implements iFilmService {
         return List.of();
     }
 
-    @Override
+        @Override
     public Page<Film> globalSearch(String query, Pageable pageable) {
         return repository.globalSearch(query, pageable);
     }

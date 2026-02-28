@@ -20,8 +20,8 @@ public class Ticket {
     @Column(name = "id_ticket")
     private Integer id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_booking", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY) // JPA aggiorna la relazione solo dal lato owner! Booking = padre, Ticket = figlio, Chi decide chi è il padre? Il documento del figlio.
+    @JoinColumn(name = "id_booking", nullable = false) // -------------------------BIDIREZIONALE CON BOOKING -> Lato owner verso Booking, ecco perchè devo gestire i biglietti in booking
     private Booking booking;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
