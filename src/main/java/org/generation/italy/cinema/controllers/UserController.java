@@ -25,7 +25,7 @@ public class UserController {
     // -----------------------------
     // Mapping: Entity -> DTO
     // -----------------------------
-    private UserDTO toDto(User u, boolean includePassword) {
+    private UserDTO toDto(User u) {
         UserDTO dto = new UserDTO();
         dto.id = u.getId();
         dto.firstName = u.getFirstName();
@@ -33,10 +33,7 @@ public class UserController {
         dto.email = u.getEmail();
         dto.role = u.getRole();
         dto.createdAt = u.getCreatedAt();
-
-        // Per sicurezza: di default NON restituire password
-        dto.password = includePassword ? u.getPassword() : null;
-
+        dto.password = null; // sempre null in response
         return dto;
     }
 
@@ -58,7 +55,7 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getAll() {
         List<UserDTO> users = userService.findAllUsers()
                 .stream()
-                .map(u -> toDto(u, false)).toList();
+                .map(u -> toDto(u)).toList();
         return ResponseEntity.ok(users);
     }
 
@@ -66,7 +63,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getById(@PathVariable Integer id) {
         return userService.findUserById(id)
-                .map(u -> ResponseEntity.ok(toDto(u, false)))
+                .map(u -> ResponseEntity.ok(toDto(u)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -74,7 +71,7 @@ public class UserController {
     @GetMapping("/by-email")
     public ResponseEntity<UserDTO> getByEmail(@RequestParam String email) {
         return userService.findUserByEmail(email)
-                .map(u -> ResponseEntity.ok(toDto(u, false)))
+                .map(u -> ResponseEntity.ok(toDto(u)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -82,7 +79,7 @@ public class UserController {
     @GetMapping("/by-role")
     public ResponseEntity<Page<UserDTO>> getByRole(@RequestParam UserRole role, Pageable pageable) {
         Page<UserDTO> page = userService.findUsersByRole(role, pageable)
-                .map(u -> toDto(u, false));
+                .map(u -> toDto(u));
         return ResponseEntity.ok(page);
     }
 
@@ -90,7 +87,7 @@ public class UserController {
     @GetMapping("/search")
     public ResponseEntity<Page<UserDTO>> search(@RequestParam String q, Pageable pageable) {
         Page<UserDTO> page = userService.searchUsersByName(q, pageable)
-                .map(u -> toDto(u, false));
+                .map(u -> toDto(u));
         return ResponseEntity.ok(page);
     }
 
@@ -103,7 +100,7 @@ public class UserController {
 
         User created = userService.createUser(fromDto(dto));
 
-        UserDTO response = toDto(created, false);
+        UserDTO response = toDto(created);
 
         return ResponseEntity
                 .created(URI.create("/api/users/" + created.getId()))
@@ -116,7 +113,7 @@ public class UserController {
                                           @RequestBody UserDTO dto) {
 
         User updated = userService.updateUser(id, fromDto(dto));
-        return ResponseEntity.ok(toDto(updated, false));
+        return ResponseEntity.ok(toDto(updated));
     }
 
     // DELETE /api/users/{id}
