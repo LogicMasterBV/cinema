@@ -42,7 +42,7 @@ public class FilmServiceJpa implements iFilmService {
     }
 
     @Override
-    public boolean updateFilmById(int id) {
+    public boolean updateFilmById(Film film) {
         return false;
     }
 
