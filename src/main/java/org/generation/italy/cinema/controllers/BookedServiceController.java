@@ -4,7 +4,7 @@ import org.generation.italy.cinema.dto.BookedServiceDTO;
 import org.generation.italy.cinema.model.entities.BookedService;
 import org.generation.italy.cinema.model.entities.BookedServiceId;
 import org.generation.italy.cinema.model.entities.Booking;
-import org.generation.italy.cinema.model.entities.ExtraProduct;
+import org.generation.italy.cinema.model.entities.CinemaService;
 import org.generation.italy.cinema.model.services.abstractions.iBookedService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -115,11 +115,11 @@ public class BookedServiceController {
         Booking booking = new Booking();
         booking.setId(dto.getBookingId());
 
-        ExtraProduct extraProduct = new ExtraProduct();
-        extraProduct.setId(dto.getExtraProductId());
+        CinemaService cinemaService = new CinemaService();
+        cinemaService.setId(dto.getExtraProductId());
 
         entity.setBooking(booking);
-        entity.setService(extraProduct);
+        entity.setService(cinemaService);
         entity.setQuantity(dto.getQuantity());
 
         return entity;

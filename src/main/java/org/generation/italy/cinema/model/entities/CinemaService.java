@@ -15,7 +15,7 @@ import java.util.List;
                 columnNames = "name"
         )
 )
-public class ExtraProduct {
+public class CinemaService {
     // Rinominata da Service a ExtraProduct per evitare conflitto con
 // org.springframework.stereotype.Service (@Service) negli import.
 // Java non può gestire due classi con lo stesso nome nello stesso file.
@@ -36,7 +36,7 @@ public class ExtraProduct {
     @OneToMany(mappedBy = "service")
     private List<BookedService> bookedServices = new ArrayList<>();
 
-    public ExtraProduct() {
+    public CinemaService() {
     }
 
     // GETTER & SETTER

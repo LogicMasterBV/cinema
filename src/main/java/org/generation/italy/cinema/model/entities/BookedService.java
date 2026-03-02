@@ -18,7 +18,7 @@ public class BookedService {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @MapsId("serviceId")
     @JoinColumn(name = "id_service", nullable = false)
-    private ExtraProduct service;
+    private CinemaService service;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -32,11 +32,11 @@ public class BookedService {
     public Booking getBooking() { return booking; }
     public void setBooking(Booking booking) { this.booking = booking; }
 
-    public ExtraProduct getService() {
+    public CinemaService getService() {
         return service;
     }
 
-    public void setService(ExtraProduct service) {
+    public void setService(CinemaService service) {
         this.service = service;
     }
 

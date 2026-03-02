@@ -4,9 +4,10 @@ import jakarta.transaction.Transactional;
 import org.generation.italy.cinema.model.entities.BookedService;
 import org.generation.italy.cinema.model.entities.BookedServiceId;
 import org.generation.italy.cinema.model.entities.Booking;
+import org.generation.italy.cinema.model.entities.CinemaService;
 import org.generation.italy.cinema.model.repositories.abstractions.BookedServiceRepository;
 import org.generation.italy.cinema.model.repositories.abstractions.BookingRepository;
-import org.generation.italy.cinema.model.repositories.abstractions.ExtraProductRepository;
+import org.generation.italy.cinema.model.repositories.abstractions.CinemaServiceRepository;
 import org.generation.italy.cinema.model.services.abstractions.iBookedService;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +19,14 @@ public class BookedServiceJpa implements iBookedService {
 
     private final BookedServiceRepository repository;
     private final BookingRepository bookingRepository;
-    private final ExtraProductRepository extraProductRepository;
+    private final CinemaServiceRepository cinemaServiceRepository;
 
     public BookedServiceJpa(BookedServiceRepository repository,
                             BookingRepository bookingRepository,
-                            ExtraProductRepository extraProductRepository) {
+                            CinemaServiceRepository cinemaServiceRepository) {
         this.repository = repository;
         this.bookingRepository = bookingRepository;
-        this.extraProductRepository = extraProductRepository;
+        this.cinemaServiceRepository = cinemaServiceRepository;
     }
 
     // READ
@@ -62,7 +63,7 @@ public class BookedServiceJpa implements iBookedService {
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
         // Controllo esistenza ExtraProduct (cibo/bevanda)
-        org.generation.italy.cinema.model.entities.ExtraProduct service = extraProductRepository.findById(
+        CinemaService service = cinemaServiceRepository.findById(
                         bookedService.getService().getId())
                 .orElseThrow(() -> new RuntimeException("Service not found"));
 
