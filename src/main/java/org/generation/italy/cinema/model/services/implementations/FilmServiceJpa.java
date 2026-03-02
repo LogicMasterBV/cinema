@@ -5,9 +5,9 @@ import org.generation.italy.cinema.model.repositories.abstractions.FilmRepositor
 import org.generation.italy.cinema.model.services.abstractions.iFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +42,7 @@ public class FilmServiceJpa implements iFilmService {
     }
 
     @Override
-    public boolean updateFilmById(Film film) {
+    public boolean updateFilmById(int id) {
         return false;
     }
 
@@ -51,7 +51,7 @@ public class FilmServiceJpa implements iFilmService {
         return List.of();
     }
 
-        @Override
+    @Override
     public Page<Film> globalSearch(String query, Pageable pageable) {
         return repository.globalSearch(query, pageable);
     }
