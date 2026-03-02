@@ -10,13 +10,15 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-
+    // LOGIN / REGISTRAZIONE
     Optional<User> findByEmailIgnoreCase(String email);
 
     boolean existsByEmailIgnoreCase(String email);
 
+    // FILTRI ADMIN
     Page<User> findByRole(UserRole role, Pageable pageable);
 
+    // Ricerca per nome/cognome (utile per admin)
     Page<User> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
             String firstName,
             String lastName,
