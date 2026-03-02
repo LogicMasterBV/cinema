@@ -24,6 +24,12 @@ public class Director {
 
     public Director() {}
 
+    public Director(Integer id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     // getters/setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
