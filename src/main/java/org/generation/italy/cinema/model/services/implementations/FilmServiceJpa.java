@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FilmService implements iFilmService {
+public class FilmServiceJpa implements iFilmService {
 
     private FilmRepository repository;
     @Autowired
-    public FilmService(FilmRepository repository) {
+    public FilmServiceJpa(FilmRepository repository) {
         this.repository = repository;
     }
 
