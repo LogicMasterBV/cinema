@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class BookingServiceId implements Serializable {
+public class BookedServiceId implements Serializable {
 
     @Column(name = "id_booking")
     private Integer bookingId;
@@ -14,9 +14,9 @@ public class BookingServiceId implements Serializable {
     @Column(name = "id_service")
     private Integer serviceId;
 
-    public BookingServiceId() {}
+    public BookedServiceId() {}
 
-    public BookingServiceId(Integer bookingId, Integer serviceId) {
+    public BookedServiceId(Integer bookingId, Integer serviceId) {
         this.bookingId = bookingId;
         this.serviceId = serviceId;
     }
@@ -30,7 +30,7 @@ public class BookingServiceId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BookingServiceId that)) return false;
+        if (!(o instanceof BookedServiceId that)) return false;
         return Objects.equals(bookingId, that.bookingId) && Objects.equals(serviceId, that.serviceId);
     }
 
