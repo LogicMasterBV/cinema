@@ -1,8 +1,12 @@
 package org.generation.italy.cinema.model.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -11,7 +15,7 @@ import java.util.List;
         schema = "public",
         uniqueConstraints = @UniqueConstraint(name = "users_email_key", columnNames = "email")
 )
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +59,18 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
     public String getPassword() { return password; }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
+
     public void setPassword(String password) { this.password = password; }
 
     public UserRole getRole() { return role; }
