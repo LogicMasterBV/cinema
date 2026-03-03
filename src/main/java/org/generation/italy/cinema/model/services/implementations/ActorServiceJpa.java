@@ -3,10 +3,11 @@ package org.generation.italy.cinema.model.services.implementations;
 import org.generation.italy.cinema.model.entities.Actor;
 import org.generation.italy.cinema.model.repositories.abstractions.ActorRepository;
 import org.generation.italy.cinema.model.services.abstractions.iActorService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ActorServiceJpa implements iActorService {
 
     private ActorRepository repo;
