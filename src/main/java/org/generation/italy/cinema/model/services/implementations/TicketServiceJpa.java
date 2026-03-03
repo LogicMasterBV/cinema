@@ -20,17 +20,17 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class TicketService implements iTicketService {
+public class TicketServiceJpa implements iTicketService {
 
     private final TicketRepository ticketRepository;
     private final BookingRepository bookingRepository;
     private final ScreeningRepository screeningRepository;
     private final SeatRepository seatRepository;
 
-    public TicketService(TicketRepository ticketRepository,
-                         BookingRepository bookingRepository,
-                         ScreeningRepository screeningRepository,
-                         SeatRepository seatRepository) {
+    public TicketServiceJpa(TicketRepository ticketRepository,
+                            BookingRepository bookingRepository,
+                            ScreeningRepository screeningRepository,
+                            SeatRepository seatRepository) {
         this.ticketRepository = ticketRepository;
         this.bookingRepository = bookingRepository;
         this.screeningRepository = screeningRepository;

@@ -13,11 +13,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class UserService implements iUserService {
+public class UserServiceJpa implements iUserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserServiceJpa(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -18,7 +18,7 @@ public interface iFilmService {
     // creazione film
     Film createFilm(Film film);
     // modifica film
-    boolean updateFilmById(int id);
+    boolean updateFilmById(Film film);
     // ricerca per genere --repo
     List<Film> findFilmByDateScreening(LocalDate date);
     Page<Film> globalSearch(String query, Pageable pageable);

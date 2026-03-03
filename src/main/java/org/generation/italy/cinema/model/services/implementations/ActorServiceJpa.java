@@ -7,11 +7,11 @@ import org.generation.italy.cinema.model.services.abstractions.iActorService;
 import java.util.List;
 import java.util.Optional;
 
-public class ActorService implements iActorService {
+public class ActorServiceJpa implements iActorService {
 
     private ActorRepository repo;
 
-    public ActorService(ActorRepository repo) {
+    public ActorServiceJpa(ActorRepository repo) {
         this.repo = repo;
     }
 

@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SeatService implements iSeatService {
+public class SeatServiceJpa implements iSeatService {
 
     private final SeatRepository seatRepository;
     private final HallRepository hallRepository;
 
-    public SeatService(SeatRepository seatRepository, HallRepository hallRepository) {
+    public SeatServiceJpa(SeatRepository seatRepository, HallRepository hallRepository) {
         this.seatRepository = seatRepository;
         this.hallRepository = hallRepository;
     }

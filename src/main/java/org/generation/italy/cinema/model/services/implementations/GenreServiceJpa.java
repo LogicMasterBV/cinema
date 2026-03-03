@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class GenreService implements iGenreService {
+public class GenreServiceJpa implements iGenreService {
     private final GenreRepository genreRepository;
-    public GenreService(GenreRepository genreRepository) {
+    public GenreServiceJpa(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
     }
     @Override

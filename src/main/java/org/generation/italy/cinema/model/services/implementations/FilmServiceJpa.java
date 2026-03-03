@@ -23,32 +23,42 @@ public class FilmServiceJpa implements iFilmService {
 
     @Override
     public List<Film> findFilmAll() {
-        return List.of();
+        return repository.findAll();
     }
 
     @Override
     public Optional<Film> findFilmById(int id) {
-        return Optional.empty();
+        return repository.findById(id);
     }
 
     @Override
     public boolean deleteFilmById(int id) {
+        Optional<Film> of = repository.findById(id);
+        if(of.isPresent()){
+            repository.deleteById(id);
+            return true;
+        }
         return false;
     }
 
     @Override
     public Film createFilm(Film film) {
-        return null;
+        return repository.save(film);
     }
 
     @Override
-    public boolean updateFilmById(int id) {
-        return false;
+    public boolean updateFilmById(Film film) {
+        boolean update = repository.existsById(film.getId());
+        if(film.getId() == null || !update){
+            return false;
+        }
+        repository.save(film);
+        return true;
     }
 
     @Override
     public List<Film> findFilmByDateScreening(LocalDate date) {
-        return List.of();
+        return repository.findFilmByDateScreening(date);
     }
 
     @Override

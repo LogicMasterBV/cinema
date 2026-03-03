@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class DirectorService implements iDirectorService {
+public class DirectorServiceJpa implements iDirectorService {
 
     private DirectorRepository repository;
 
-    public DirectorService(DirectorRepository repository) {
+    public DirectorServiceJpa(DirectorRepository repository) {
         this.repository = repository;
     }
 

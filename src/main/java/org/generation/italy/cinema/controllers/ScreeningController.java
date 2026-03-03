@@ -5,7 +5,8 @@ import org.generation.italy.cinema.model.entities.Film;
 import org.generation.italy.cinema.model.entities.Hall;
 import org.generation.italy.cinema.model.entities.Screening;
 import org.generation.italy.cinema.model.entities.Seat;
-import org.generation.italy.cinema.model.services.implementations.ScreeningService;
+import org.generation.italy.cinema.model.services.abstractions.iScreeningService;
+import org.generation.italy.cinema.model.services.implementations.ScreeningServiceJpa;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,10 @@ import java.util.List;
 @RequestMapping("/api/screenings")
 public class ScreeningController {
 
-    private final ScreeningService screeningService;
+    private final iScreeningService screeningService;
 
     // @Autowired non necessario se si ha un solo costruttore
-    public ScreeningController(ScreeningService screeningService) {
+    public ScreeningController(ScreeningServiceJpa screeningService) {
         this.screeningService = screeningService;
     }
 

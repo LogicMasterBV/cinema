@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class HallService implements iHallService {
+public class HallServiceJpa implements iHallService {
     HallRepository repo;
 
-    public HallService(HallRepository repo) {
+    public HallServiceJpa(HallRepository repo) {
         this.repo = repo;
     }
 

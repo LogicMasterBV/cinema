@@ -13,15 +13,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class ScreeningService implements iScreeningService {
+public class ScreeningServiceJpa implements iScreeningService {
 
     private final ScreeningRepository screeningRepository;
     private final HallRepository hallRepository;
     private final FilmRepository filmRepository;
 
-    public ScreeningService(ScreeningRepository screeningRepository,
-                                HallRepository hallRepository,
-                                FilmRepository filmRepository) {
+    public ScreeningServiceJpa(ScreeningRepository screeningRepository,
+                               HallRepository hallRepository,
+                               FilmRepository filmRepository) {
         this.screeningRepository = screeningRepository;
         this.hallRepository = hallRepository;
         this.filmRepository = filmRepository;
