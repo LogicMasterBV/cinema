@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.generation.italy.cinema.dto.FilmDTO.fromEntity;
@@ -60,5 +61,30 @@ public class FilmController {
                 .map(FilmDTO :: fromEntity);
 
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/by-date")
+    public ResponseEntity<List<FilmDTO>> findByDate(
+            @RequestParam LocalDate date) {
+
+        List<FilmDTO> films = service.findFilmByDateScreening(date)
+                .stream()
+                .map(FilmDTO::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(films);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable int id,
+                                       @RequestBody FilmDTO dto) {
+
+        Film film = dto.toEntity();
+        film.setId(id);
+        boolean updated = service.updateFilmById(film);
+        if (updated) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
