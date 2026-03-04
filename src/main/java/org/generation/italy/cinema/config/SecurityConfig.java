@@ -77,7 +77,7 @@ public class SecurityConfig {
         // Permetti richieste dal frontend Angular
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
 
-        // Metodi HTTP consentiti
+        // Metodi HTTP consentiti --> "Serve solo a dire al browser: “Angular può fare richieste HTTP di questi tipi verso il backend.”
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         // Header consentiti
