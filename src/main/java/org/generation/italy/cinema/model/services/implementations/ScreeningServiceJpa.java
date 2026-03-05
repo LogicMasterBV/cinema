@@ -125,7 +125,7 @@ public class ScreeningServiceJpa implements iScreeningService {
         existing.setHall(screen.getHall());
         existing.setScreeningDate(screen.getScreeningDate());
         existing.setScreeningTime(screen.getScreeningTime());
-        // aggiungi altri campi che hai nell'entità
+        existing.setBasePrice(screen.getBasePrice());
 
         return screeningRepository.save(existing);
     }
