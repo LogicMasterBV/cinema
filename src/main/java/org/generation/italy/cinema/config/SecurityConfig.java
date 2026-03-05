@@ -41,7 +41,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> auth
                 // WHITELIST (pubblico)
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**","/api/film/search", "/api/**").permitAll()
 
                 // ADMIN ONLY (se vuoi)
                 .requestMatchers("/api/admin/**").hasRole("admin")
