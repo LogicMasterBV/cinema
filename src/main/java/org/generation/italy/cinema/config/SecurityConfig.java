@@ -1,9 +1,7 @@
 package org.generation.italy.cinema.config;
-
 import org.generation.italy.cinema.auth.Filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +14,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.List;
 
 @Configuration
@@ -39,7 +36,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration cfg) throws Exception {
         return cfg.getAuthenticationManager();
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -54,25 +50,14 @@ public class SecurityConfig {
                 sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
 
+        // Regole di autorizzazione
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
 
-                //-------------------------------------------------------
-                // Lettura pubblica per frontend utente
-                .requestMatchers(HttpMethod.GET, "/api/film/**", "/api/halls/**", "/api/screenings/**").permitAll()
-
-                //-------------------------------------------------------
-                // Se vuoi mantenere compatibilità col vecchio path plurale
-                .requestMatchers(HttpMethod.GET, "/api/films/**").permitAll()
-
-                //-------------------------------------------------------
-                // Scrittura screening solo admin
-                .requestMatchers(HttpMethod.POST, "/api/screenings/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/screenings/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/screenings/**").hasRole("ADMIN")
+                // Rotte pubbliche (login e register)
+                .requestMatchers("/api/auth/**","/api/**").permitAll()
 
                 // Solo ADMIN (se usate ruoli)
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/admin/**").hasRole("admin")
 
                 // Tutto il resto richiede autenticazione
                 .anyRequest().authenticated()
@@ -92,8 +77,7 @@ public class SecurityConfig {
         // Permetti richieste dal frontend Angular
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
 
-        // Metodi HTTP consentiti --> "Serve solo a dire al browser:
-        // Angular può fare richieste HTTP di questi tipi verso il backend."
+        // Metodi HTTP consentiti
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         // Header consentiti
@@ -106,5 +90,6 @@ public class SecurityConfig {
 
         return source;
     }
-}
 
+
+}

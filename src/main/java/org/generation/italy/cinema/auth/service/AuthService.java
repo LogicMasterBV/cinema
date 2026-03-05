@@ -11,10 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-//-------------------------------------------------------
-import java.util.List;
-import java.util.Map;
-
 @Service
 public class AuthService {
 
@@ -57,15 +53,7 @@ public class AuthService {
         User user = userRepository.findByEmailIgnoreCase(req.email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        //-------------------------------------------------------
-        // Inseriamo i ruoli nel token per permettere al frontend di capire se è admin
-        Map<String, Object> claims = Map.of(
-                "roles", List.of("ROLE_" + user.getRole().name().toUpperCase())
-        );
-
-        //-------------------------------------------------------
-        // User deve implementare UserDetails (come già nel tuo progetto attuale)
-        String token = jwtService.generateToken(claims, user);
-        return new AuthResponse(token);
+        String token = jwtService.generateToken(user);
+        return new AuthResponse(token, user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole());
     }
 }
