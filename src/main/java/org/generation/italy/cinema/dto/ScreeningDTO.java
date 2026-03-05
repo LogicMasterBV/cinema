@@ -2,6 +2,7 @@ package org.generation.italy.cinema.dto;
 
 import org.generation.italy.cinema.model.entities.Screening;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -11,6 +12,7 @@ public class ScreeningDTO {
     private Integer hallId;
     private LocalDate screeningDate;
     private LocalTime screeningTime;
+    private BigDecimal basePrice;
 
     // Costruttore vuoto (necessario per la deserializzazione JSON)
     public ScreeningDTO() {}
@@ -22,6 +24,7 @@ public class ScreeningDTO {
         this.hallId = screening.getHall().getId();
         this.screeningDate = screening.getScreeningDate();
         this.screeningTime = screening.getScreeningTime();
+        this.basePrice = screening.getBasePrice();
     }
 
     public Integer getId() {return id;}
@@ -34,4 +37,6 @@ public class ScreeningDTO {
     public void setScreeningDate(LocalDate screeningDate) {this.screeningDate = screeningDate;}
     public LocalTime getScreeningTime() {return screeningTime;}
     public void setScreeningTime(LocalTime screeningTime) {this.screeningTime = screeningTime;}
+    public BigDecimal getBasePrice() {return basePrice;}
+    public void setBasePrice(BigDecimal basePrice) {this.basePrice = basePrice;}
 }

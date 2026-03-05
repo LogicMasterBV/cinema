@@ -6,7 +6,6 @@ import org.generation.italy.cinema.model.entities.Hall;
 import org.generation.italy.cinema.model.entities.Screening;
 import org.generation.italy.cinema.model.entities.Seat;
 import org.generation.italy.cinema.model.services.abstractions.iScreeningService;
-import org.generation.italy.cinema.model.services.implementations.ScreeningServiceJpa;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,23 +19,16 @@ public class ScreeningController {
 
     private final iScreeningService screeningService;
 
-    // @Autowired non necessario se si ha un solo costruttore
-    public ScreeningController(ScreeningServiceJpa screeningService) {
+    public ScreeningController(iScreeningService screeningService) {
         this.screeningService = screeningService;
     }
 
     @GetMapping
     public ResponseEntity<List<ScreeningDTO>> getAll() {
-        //List<Screening> screenings = screeningService.getAll();
-        //List<ScreeningDTO> result = new ArrayList<>();
-        //for (Screening screening : screenings) {
-        //    result.add(new ScreeningDTO(screening)); // usa il costruttore del DTO
-        //}
-        // È più pulito in questo modo :
-        List<ScreeningDTO> result = screeningService.getAll()    // restituisce List<Screening>
-                .stream()                // trasforma la lista in uno stream
-                .map(ScreeningDTO::new)  // converte ogni Screening in ScreeningDTO usando il costruttore
-                .toList();               // raccoglie il risultato in una nuova List<ScreeningDTO>
+        List<ScreeningDTO> result = screeningService.getAll()
+                .stream()
+                .map(ScreeningDTO::new)
+                .toList();
         return ResponseEntity.ok(result);
     }
 
@@ -98,20 +90,21 @@ public class ScreeningController {
     }
 
     private Screening toEntity(ScreeningDTO dto) {
-        Screening screening = new Screening();  // crea una nuova entità vuota
+        Screening screening = new Screening();
 
         Film film = new Film();
-        film.setId(dto.getFilmId());            // prende l'id del film dal DTO
-        // e crea un oggetto Film con solo l'id
+        film.setId(dto.getFilmId());
+
         Hall hall = new Hall();
-        hall.setId(dto.getHallId());            // stesso cosa per la sala
+        hall.setId(dto.getHallId());
 
-        screening.setFilm(film);               // assegna il film alla proiezione
-        screening.setHall(hall);               // assegna la sala alla proiezione
-        screening.setScreeningDate(dto.getScreeningDate());  // copia la data
-        screening.setScreeningTime(dto.getScreeningTime());  // copia l'orario
+        screening.setFilm(film);
+        screening.setHall(hall);
+        screening.setScreeningDate(dto.getScreeningDate());
+        screening.setScreeningTime(dto.getScreeningTime());
+        screening.setBasePrice(dto.getBasePrice());
 
-        return screening;                       // restituisce l'entità pronta
+        return screening;
     }
 
     @PostMapping
