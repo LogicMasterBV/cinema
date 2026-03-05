@@ -3,6 +3,7 @@ package org.generation.italy.cinema.config;
 import org.generation.italy.cinema.auth.Filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,30 +54,25 @@ public class SecurityConfig {
                 sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
 
-        // Regole di autorizzazione
         http.authorizeHttpRequests(auth -> auth
-
-                // Rotte pubbliche (login e register)
                 .requestMatchers("/api/auth/**").permitAll()
 
-                // 🔹 API del cinema rese pubbliche
-                // Queste rotte devono essere accessibili anche dal frontend Angular
-                // senza autenticazione JWT, altrimenti Angular riceverebbe sempre 403
-                .requestMatchers("/api/films/**").permitAll()
+                //-------------------------------------------------------
+                // Lettura pubblica per frontend utente
+                .requestMatchers(HttpMethod.GET, "/api/film/**", "/api/halls/**", "/api/screenings/**").permitAll()
 
-                // 🔹 Endpoint gestione sale cinema
-                // Servono al planner per caricare le sale disponibili
-                .requestMatchers("/api/halls/**").permitAll()
+                //-------------------------------------------------------
+                // Se vuoi mantenere compatibilità col vecchio path plurale
+                .requestMatchers(HttpMethod.GET, "/api/films/**").permitAll()
 
-                // 🔹 Endpoint gestione proiezioni
-                // Il planner Angular usa queste API per:
-                // - leggere le proiezioni
-                // - crearle
-                // - cancellarle
-                .requestMatchers("/api/screenings/**").permitAll()
+                //-------------------------------------------------------
+                // Scrittura screening solo admin
+                .requestMatchers(HttpMethod.POST, "/api/screenings/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/screenings/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/screenings/**").hasRole("ADMIN")
 
                 // Solo ADMIN (se usate ruoli)
-                .requestMatchers("/api/admin/**").hasRole("admin")
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
                 // Tutto il resto richiede autenticazione
                 .anyRequest().authenticated()
@@ -110,5 +106,5 @@ public class SecurityConfig {
 
         return source;
     }
-
 }
+

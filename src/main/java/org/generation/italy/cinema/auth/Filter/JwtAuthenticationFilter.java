@@ -1,4 +1,5 @@
 package org.generation.italy.cinema.auth.Filter;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
+
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -48,7 +51,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
-        String username = jwtService.extractUsername(token); // email
+
+        //-------------------------------------------------------
+        // Se token invalido/scaduto/malformato, NON blocco le rotte pubbliche:
+        // pulisco il contesto e lascio proseguire la chain.
+        String username;
+        try {
+            username = jwtService.extractUsername(token); // email
+        } catch (Exception ex) {
+            SecurityContextHolder.clearContext();
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // Se token non contiene username o se sei già autenticato, passo oltre
         if (username == null || SecurityContextHolder.getContext().getAuthentication() != null) {
@@ -76,3 +90,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
+
