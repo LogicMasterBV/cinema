@@ -16,42 +16,44 @@ public class FilmDTO {
     private String description;
     private LocalDate releaseDate;
     private Integer ageRating;
-    private Integer directorId;
-    private List<Integer> screeningsId;
-    private Set<Integer> actorsId;
-    private Set<Integer> genresId;
+    private DirectorDTO director;
+    private List<ScreeningDTO> screenings;
+    private Set<ActorDTO> actors;
+    private Set<GenreDTO> genres;
 
     public FilmDTO(){}
 
     public FilmDTO(Integer id, String title, Integer durationMinutes, String description, LocalDate releaseDate,
-                   Integer ageRating, Integer directorId, List<Integer> screeningsId, Set<Integer> actorsId, Set<Integer> genresId) {
+                   Integer ageRating, DirectorDTO director, List<ScreeningDTO> screenings, Set<ActorDTO> actors, Set<GenreDTO> genres) {
         this.id = id;
         this.title = title;
         this.durationMinutes = durationMinutes;
         this.description = description;
         this.releaseDate = releaseDate;
         this.ageRating = ageRating;
-        this.directorId = directorId;
-        this.screeningsId = screeningsId;
-        this.actorsId = actorsId;
-        this.genresId = genresId;
+        this.director = director;
+        this.screenings = screenings;
+        this.actors = actors;
+        this.genres = genres;
     }
     //entity -> dto
     public static FilmDTO fromEntity(Film film){
         if(film == null){
             return null;
         }
-        return new FilmDTO(film.getId(), film.getTitle(),film.getDurationMinutes(),film.getDescription(),
-                film.getReleaseDate(), film.getAgeRating(), film.getDirector() != null ? film.getDirector().getId() : null,
-                film.getScreenings() != null ? film.getScreenings().stream().map(Screening::getId).toList() : null,
-                film.getActors() != null ? film.getActors().stream().map(Actor::getId).collect(Collectors.toSet()): null,
-                film.getGenres() != null ? film.getGenres().stream().map(Genre::getId).collect(Collectors.toSet()) : null);
+        return new FilmDTO(
+                film.getId(),
+                film.getTitle(),
+                film.getDurationMinutes(),
+                film.getDescription(),
+                film.getReleaseDate(),
+                film.getAgeRating(),
+                film.getDirector() != null ? DirectorDTO.fromDirector(film.getDirector()) : null,
+                film.getScreenings() != null ? film.getScreenings().stream().map(ScreeningDTO::new).toList() : null,
+                film.getActors() != null ? film.getActors().stream().map(ActorDTO::fromEntity).collect(Collectors.toSet()): null,
+                film.getGenres() != null ? film.getGenres().stream().map(GenreDTO::fromEntity).collect(Collectors.toSet()) : null
+        );
     }
-    //dto -> entity
-//    public Film toEntity(FilmDTO dto){
-//        return new Film(id, title, durationMinutes, description, releaseDate, ageRating,
-//                directorId, screeningsId, actorsId, genresId);
-//    }
 
     public Film toEntity() {
         Film film = new Film();
@@ -64,19 +66,19 @@ public class FilmDTO {
         film.setAgeRating(this.ageRating);
 
         // director
-        if (this.directorId != null) {
+        if (this.director != null) {
             Director d = new Director();
-            d.setId(this.directorId);
+            d.setId(this.director.getId());
             film.setDirector(d);
         }
 
         // screenings
-        if (this.screeningsId != null) {
+        if (this.screenings != null) {
             film.setScreenings(
-                    this.screeningsId.stream()
-                            .map(id -> {
+                    this.screenings.stream()
+                            .map(dto -> {
                                 Screening s = new Screening();
-                                s.setId(id);
+                                s.setId(dto.getId());
                                 return s;
                             })
                             .toList()
@@ -84,12 +86,12 @@ public class FilmDTO {
         }
 
         // actors
-        if (this.actorsId != null) {
+        if (this.actors != null) {
             film.setActors(
-                    this.actorsId.stream()
-                            .map(id -> {
+                    this.actors.stream()
+                            .map(dto -> {
                                 Actor a = new Actor();
-                                a.setId(id);
+                                a.setId(dto.getId());
                                 return a;
                             })
                             .collect(Collectors.toSet())
@@ -97,12 +99,12 @@ public class FilmDTO {
         }
 
         // genres
-        if (this.genresId != null) {
+        if (this.genres != null) {
             film.setGenres(
-                    this.genresId.stream()
-                            .map(id -> {
+                    this.genres.stream()
+                            .map(dto -> {
                                 Genre g = new Genre();
-                                g.setId(id);
+                                g.setId(dto.getId());
                                 return g;
                             })
                             .collect(Collectors.toSet())
@@ -160,35 +162,35 @@ public class FilmDTO {
         this.ageRating = ageRating;
     }
 
-    public Integer getDirectorId() {
-        return directorId;
+    public DirectorDTO getDirector() {
+        return director;
     }
 
-    public void setDirectorId(Integer directorId) {
-        this.directorId = directorId;
+    public void setDirector(DirectorDTO director) {
+        this.director = director;
     }
 
-    public List<Integer> getScreeningsId() {
-        return screeningsId;
+    public List<ScreeningDTO> getScreenings() {
+        return screenings;
     }
 
-    public void setScreeningsId(List<Integer> screeningsId) {
-        this.screeningsId = screeningsId;
+    public void setScreenings(List<ScreeningDTO> screenings) {
+        this.screenings = screenings;
     }
 
-    public Set<Integer> getActorsId() {
-        return actorsId;
+    public Set<ActorDTO> getActors() {
+        return actors;
     }
 
-    public void setActorsId(Set<Integer> actorsId) {
-        this.actorsId = actorsId;
+    public void setActors(Set<ActorDTO> actors) {
+        this.actors = actors;
     }
 
-    public Set<Integer> getGenresId() {
-        return genresId;
+    public Set<GenreDTO> getGenres() {
+        return genres;
     }
 
-    public void setGenresId(Set<Integer> genresId) {
-        this.genresId = genresId;
+    public void setGenres(Set<GenreDTO> genres) {
+        this.genres = genres;
     }
 }
