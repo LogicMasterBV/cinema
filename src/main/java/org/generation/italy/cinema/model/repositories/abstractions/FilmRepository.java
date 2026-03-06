@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public interface FilmRepository extends JpaRepository<Film, Integer> {
 
@@ -34,5 +35,16 @@ public interface FilmRepository extends JpaRepository<Film, Integer> {
        """)
     Page<Film> globalSearch(@Param("q") String query, Pageable pageable);
 
-
+    @Query("""
+    SELECT DISTINCT f FROM Film f
+    JOIN f.genres g
+    WHERE g.name IN :genreNames
+    AND f.releaseDate BETWEEN :from AND :to
+    ORDER BY f.releaseDate ASC
+""")
+    List<Film> findUpcomingByGenres(
+            @Param("genreNames") Set<String> genreNames,
+            @Param("from") LocalDate from,
+            @Param("to") LocalDate to
+    );
 }

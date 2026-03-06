@@ -87,4 +87,14 @@ public class FilmController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    // GET /api/film/suggested?userId=1
+    @GetMapping("/suggested")
+    public ResponseEntity<List<FilmDTO>> getSuggested(@RequestParam Integer userId) {
+        List<FilmDTO> films = service.getSuggestedFilmsForUser(userId)
+                .stream()
+                .map(FilmDTO::fromEntity)
+                .toList();
+        return ResponseEntity.ok(films);
+    }
 }

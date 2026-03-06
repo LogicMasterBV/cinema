@@ -22,4 +22,5 @@ public interface iFilmService {
     // ricerca per genere --repo
     List<Film> findFilmByDateScreening(LocalDate date);
     Page<Film> globalSearch(String query, Pageable pageable);
+    List<Film> getSuggestedFilmsForUser(Integer userId);
 }
