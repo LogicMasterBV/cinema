@@ -20,11 +20,12 @@ public class FilmDTO {
     private List<ScreeningDTO> screenings;
     private Set<ActorDTO> actors;
     private Set<GenreDTO> genres;
+    private String imagePath;
 
     public FilmDTO(){}
 
     public FilmDTO(Integer id, String title, Integer durationMinutes, String description, LocalDate releaseDate,
-                   Integer ageRating, DirectorDTO director, List<ScreeningDTO> screenings, Set<ActorDTO> actors, Set<GenreDTO> genres) {
+                   Integer ageRating, DirectorDTO director, List<ScreeningDTO> screenings, Set<ActorDTO> actors, Set<GenreDTO> genres, String imagePath) {
         this.id = id;
         this.title = title;
         this.durationMinutes = durationMinutes;
@@ -35,6 +36,7 @@ public class FilmDTO {
         this.screenings = screenings;
         this.actors = actors;
         this.genres = genres;
+        this.imagePath = imagePath;
     }
     //entity -> dto
     public static FilmDTO fromEntity(Film film){
@@ -51,7 +53,8 @@ public class FilmDTO {
                 film.getDirector() != null ? DirectorDTO.fromDirector(film.getDirector()) : null,
                 film.getScreenings() != null ? film.getScreenings().stream().map(ScreeningDTO::new).toList() : null,
                 film.getActors() != null ? film.getActors().stream().map(ActorDTO::fromEntity).collect(Collectors.toSet()): null,
-                film.getGenres() != null ? film.getGenres().stream().map(GenreDTO::fromEntity).collect(Collectors.toSet()) : null
+                film.getGenres() != null ? film.getGenres().stream().map(GenreDTO::fromEntity).collect(Collectors.toSet()) : null,
+                film.getImagePath()
         );
     }
 
@@ -64,6 +67,7 @@ public class FilmDTO {
         film.setDescription(this.description);
         film.setReleaseDate(this.releaseDate);
         film.setAgeRating(this.ageRating);
+        film.setImagePath(this.imagePath);
 
         // director
         if (this.director != null) {

@@ -7,8 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -35,9 +39,15 @@ public class FilmController {
                 .map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<FilmDTO> create(@RequestBody FilmDTO dto) {
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<FilmDTO> create(@RequestPart("film") FilmDTO dto, @RequestPart("image")MultipartFile image) throws Exception {
+        String fileName = image.getOriginalFilename();
+        Path path = Paths.get("uploads/" + fileName);
+
+        Files.write(path, image.getBytes());
+
         Film film = dto.toEntity();
+        film.setImagePath(fileName);
         Film film1 = service.createFilm(film);
         FilmDTO filmDTO = fromEntity(film1);
         URI location = URI.create("/api/film/" + film1.getId());

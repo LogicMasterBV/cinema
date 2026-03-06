@@ -39,6 +39,11 @@ public class Film {
     @OneToMany(mappedBy = "film")
     private List<Screening> screenings = new ArrayList<>();
 
+    @Column(name = "image_path", length = 300)
+    private String imagePath;
+
+
+
     @ManyToMany
     @JoinTable(
             name = "film_actor",
@@ -89,4 +94,7 @@ public class Film {
 
     public Set<Genre> getGenres() { return genres; }
     public void setGenres(Set<Genre> genres) { this.genres = genres; }
+
+    public String getImagePath() {return imagePath; }
+    public void setImagePath(String imagePath) {this.imagePath = imagePath;}
 }
