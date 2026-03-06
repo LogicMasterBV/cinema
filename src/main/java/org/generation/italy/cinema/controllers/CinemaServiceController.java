@@ -23,13 +23,21 @@ public class CinemaServiceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<CinemaService>> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(cinemaService.findById(id));
+    public ResponseEntity<CinemaService> getById(@PathVariable Integer id) {
+        return cinemaService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<CinemaService> create(@RequestBody CinemaService service) {
         // Be careful: The user must send JSON fields matching the Entity
         return ResponseEntity.ok(cinemaService.save(service));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        cinemaService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

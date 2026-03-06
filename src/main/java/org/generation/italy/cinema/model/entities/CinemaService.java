@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(
@@ -33,6 +35,7 @@ public class CinemaService {
     @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private BigDecimal price;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "service")
     private List<BookedService> bookedServices = new ArrayList<>();
 
