@@ -27,7 +27,7 @@ public class GenreController {
 
         return ResponseEntity.ok(genres);
     }
-
+ // Messi i DTO
     @GetMapping("/{id}")
     public ResponseEntity<GenreDTO> getById(@PathVariable Integer id) {
         Genre genre = genreService.findById(id);
