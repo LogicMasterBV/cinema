@@ -47,6 +47,7 @@ public class DirectorServiceJpa implements iDirectorService {
 
     @Override
     public Director createDirector(Director director) {
+        director.setId(null);
         return repository.save(director);
     }
 }

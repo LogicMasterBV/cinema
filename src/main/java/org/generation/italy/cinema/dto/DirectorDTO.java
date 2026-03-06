@@ -20,6 +20,9 @@ public class DirectorDTO {
     }
     // dto -> entity
     public Director toEntity(){
+        if(this.id == null || this.id == 0){
+            return new Director(null, firstName, lastName); // lascia null per auto-increment
+        }
         return new Director(id, firstName, lastName);
     }
 
