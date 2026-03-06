@@ -1,5 +1,6 @@
 package org.generation.italy.cinema.controllers;
 
+import org.generation.italy.cinema.dto.SeatDTO;
 import org.generation.italy.cinema.model.entities.Seat;
 import org.generation.italy.cinema.model.services.abstractions.iSeatService;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,12 @@ public class SeatController {
 
     // Ritorna tutti i posti di una sala (ordinati come da query repository)
     @GetMapping("/hall/{hallId}")
-    public List<Seat> getByHall(@PathVariable int hallId) {
-        return seatService.getByHallId(hallId);
+    public List<SeatDTO> getByHall(@PathVariable int hallId) {
+        return seatService.getByHallId(hallId)
+                .stream()
+                .map(SeatDTO::new)
+                .toList();
     }
-
     // Crea un nuovo posto
     @PostMapping
     public Seat create(@RequestBody Seat seat) {
