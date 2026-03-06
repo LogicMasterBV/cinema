@@ -1,6 +1,7 @@
 package org.generation.italy.cinema.model.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -19,10 +20,12 @@ public class Booking {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_screening", nullable = false)
+    @JsonIgnore
     private Screening screening;
 
     @Column(name = "total_price", precision = 10, scale = 2, nullable = false)
@@ -34,11 +37,13 @@ public class Booking {
     @OneToMany(mappedBy = "booking", // @OneToMany (mappedby ...) -> significa "io non gestisco la relazione, la gestisce l'altro lato". Booking non scrive nel DB, sarà ticket a scriverci --> // --------------------BIDIREZIONALE CON TICKET
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
     @OneToMany(mappedBy = "booking",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonIgnore
     private List<BookedService> bookedServices = new ArrayList<>();
 
     public Booking() {

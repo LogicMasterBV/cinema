@@ -1,5 +1,6 @@
 package org.generation.italy.cinema.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,10 +26,12 @@ public class Screening {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_hall", nullable = false)
+    @JsonIgnore
     private Hall hall;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_film", nullable = false)
+    @JsonIgnore
     private Film film;
 
     @Column(name = "screening_date", nullable = false)
@@ -41,9 +44,11 @@ public class Screening {
     private BigDecimal basePrice;
 
     @OneToMany(mappedBy = "screening")
+    @JsonIgnore
     private List<Booking> bookings = new ArrayList<>();
 
     @OneToMany(mappedBy = "screening")
+    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
     public Screening() {}

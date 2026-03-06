@@ -1,5 +1,6 @@
 package org.generation.italy.cinema.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,11 @@ public class Hall {
     private Integer capacity;
 
     @OneToMany(mappedBy = "hall")
+    @JsonIgnore
     private List<Seat> seats = new ArrayList<>();
 
     @OneToMany(mappedBy = "hall")
+    @JsonIgnore
     private List<Screening> screenings = new ArrayList<>();
 
     public Hall() {}
