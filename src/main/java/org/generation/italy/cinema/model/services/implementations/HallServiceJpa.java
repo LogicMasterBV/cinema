@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class HallServiceJpa implements iHallService {
-    HallRepository repo;
+    private final HallRepository repo;
 
     public HallServiceJpa(HallRepository repo) {
         this.repo = repo;
@@ -21,10 +22,9 @@ public class HallServiceJpa implements iHallService {
     }
 
     @Override
-    public Optional<Hall> findHallById(int id) {
+    public Optional<Hall> findHallById(Integer id) {
         return repo.findById(id);
     }
-
 
     @Override
     public Hall createHall(Hall hall) {
@@ -32,13 +32,11 @@ public class HallServiceJpa implements iHallService {
     }
 
     @Override
-    public boolean deleteHallById(int id) {
-        if(repo.findById(id).isEmpty()) {
+    public boolean deleteHallById(Integer id) {
+        if (repo.findById(id).isEmpty()) {
             return false;
         }
         repo.deleteById(id);
         return true;
-
-
     }
 }

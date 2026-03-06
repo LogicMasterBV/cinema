@@ -27,6 +27,12 @@ public class Hall {
 
     public Hall() {}
 
+    public Hall(Integer id, String name, Integer capacity) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+    }
+
     // getters/setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }

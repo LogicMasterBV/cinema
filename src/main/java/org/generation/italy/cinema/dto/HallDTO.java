@@ -3,9 +3,12 @@ package org.generation.italy.cinema.dto;
 import org.generation.italy.cinema.model.entities.Hall;
 
 public class HallDTO {
-    private int id;
+    private Integer id;
     private String name;
-    private int capacity;
+    private Integer capacity;
+
+    public HallDTO() {
+    }
 
     public HallDTO(Hall hall) {
         this.id = hall.getId();
@@ -13,11 +16,11 @@ public class HallDTO {
         this.capacity = hall.getCapacity();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -29,8 +32,12 @@ public class HallDTO {
         this.name = name;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
     public static Hall toEntity(HallDTO dto) {
@@ -43,8 +50,5 @@ public class HallDTO {
 
     public static HallDTO fromEntity(Hall hall) {
         return new HallDTO(hall);
-    }
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 }

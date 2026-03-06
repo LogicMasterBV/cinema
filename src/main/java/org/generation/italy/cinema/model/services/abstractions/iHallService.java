@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface iHallService {
     List<Hall> findHallAll();
-    Optional<Hall> findHallById(int id);
-    boolean deleteHallById(int id);
+    Optional<Hall> findHallById(Integer id);
+    boolean deleteHallById(Integer id);
     Hall createHall(Hall hall);
 }
