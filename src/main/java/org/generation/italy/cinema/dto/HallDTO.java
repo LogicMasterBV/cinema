@@ -3,38 +3,21 @@ package org.generation.italy.cinema.dto;
 import org.generation.italy.cinema.model.entities.Hall;
 
 public class HallDTO {
-
-    private Integer id;
+    private int id;
     private String name;
-    private Integer capacity;
+    private int capacity;
 
-    public HallDTO() {}
-
-    public static HallDTO fromEntity(Hall hall) {
-        if (hall == null) return null;
-
-        HallDTO dto = new HallDTO();
-        dto.setId(hall.getId());
-        dto.setName(hall.getName());
-        dto.setCapacity(hall.getCapacity());
-        return dto;
+    public HallDTO(Hall hall) {
+        this.id = hall.getId();
+        this.name = hall.getName();
+        this.capacity = hall.getCapacity();
     }
 
-    public static Hall toEntity(HallDTO dto) {
-        if (dto == null) return null;
-
-        Hall hall = new Hall();
-        hall.setId(dto.getId());
-        hall.setName(dto.getName());
-        hall.setCapacity(dto.getCapacity());
-        return hall;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -46,11 +29,22 @@ public class HallDTO {
         this.name = name;
     }
 
-    public Integer getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Integer capacity) {
+    public static Hall toEntity(HallDTO dto) {
+        Hall hall = new Hall();
+        hall.setId(dto.getId());
+        hall.setName(dto.getName());
+        hall.setCapacity(dto.getCapacity());
+        return hall;
+    }
+
+    public static HallDTO fromEntity(Hall hall) {
+        return new HallDTO(hall);
+    }
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 }

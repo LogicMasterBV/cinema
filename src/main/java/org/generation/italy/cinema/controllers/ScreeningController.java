@@ -1,6 +1,7 @@
 package org.generation.italy.cinema.controllers;
 
 import org.generation.italy.cinema.dto.ScreeningDTO;
+import org.generation.italy.cinema.dto.SeatDTO;
 import org.generation.italy.cinema.model.entities.Film;
 import org.generation.italy.cinema.model.entities.Hall;
 import org.generation.italy.cinema.model.entities.Screening;
@@ -85,8 +86,12 @@ public class ScreeningController {
     }
 
     @GetMapping("/{id}/seats/available")
-    public ResponseEntity<List<Seat>> getAvailableSeats(@PathVariable Integer id) {
-        return ResponseEntity.ok(screeningService.getAvailableSeats(id));
+    public ResponseEntity<List<SeatDTO>> getAvailableSeats(@PathVariable Integer id) {
+        List<SeatDTO> result = screeningService.getAvailableSeats(id)
+                .stream()
+                .map(SeatDTO::new)
+                .toList();
+        return ResponseEntity.ok(result);
     }
 
     private Screening toEntity(ScreeningDTO dto) {
