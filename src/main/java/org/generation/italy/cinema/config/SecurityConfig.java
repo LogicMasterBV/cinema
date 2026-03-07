@@ -59,6 +59,9 @@ public class SecurityConfig {
                 // Tutte le rotte film pubbliche (lista + suggerimenti)
                 .requestMatchers("/api/film/**").permitAll()
 
+                //Rotte per gli attori
+                .requestMatchers("/api/actors/**").permitAll()
+
                 // Solo ADMIN
                 .requestMatchers("/api/admin/**").hasRole("admin")
 

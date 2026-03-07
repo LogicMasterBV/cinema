@@ -21,7 +21,7 @@ public class Actor {
     private String lastName;
 
     @Column(name = "birth_date")
-    private LocalDate birthDate;
+    private String birthDate;
 
     @Column(name = "nationality", length = 100)
     private String nationality;
@@ -42,8 +42,8 @@ public class Actor {
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public LocalDate getBirthDate() { return birthDate; }
-    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+    public String getBirthDate() { return birthDate; }
+    public void setBirthDate(String birthDate) { this.birthDate = birthDate; }
 
     public String getNationality() { return nationality; }
     public void setNationality(String nationality) { this.nationality = nationality; }

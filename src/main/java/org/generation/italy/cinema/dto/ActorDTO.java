@@ -9,7 +9,7 @@ public class ActorDTO {
     private Integer id;
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private String birthDate;
     private String nationality;
 
     public ActorDTO() {}
@@ -62,11 +62,11 @@ public class ActorDTO {
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
