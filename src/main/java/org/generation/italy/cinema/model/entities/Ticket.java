@@ -39,7 +39,7 @@ public class Ticket {
     @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private BigDecimal price;
 
-    @Column(name = "date", insertable = false, updatable = false, nullable = false)
+    @Column(name = "date", updatable = false, nullable = false)
     private LocalDateTime date;
 
     public Ticket() {}

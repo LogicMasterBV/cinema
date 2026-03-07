@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -108,6 +109,7 @@ public class TicketServiceJpa implements iTicketService {
 
         // 5) creo ticket
         Ticket t = new Ticket();
+        t.setDate(LocalDateTime.now());
         t.setBooking(booking);
         t.setScreening(screening);
         t.setSeat(seat);
