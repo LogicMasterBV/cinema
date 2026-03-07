@@ -54,7 +54,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
 
                 // Rotte pubbliche (login e register)
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**","/api/**").permitAll()
 
                 // Tutte le rotte film pubbliche (lista + suggerimenti)
                 .requestMatchers("/api/film/**").permitAll()

@@ -42,4 +42,16 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
         WHERE t.screening.id = :screeningId
         """)
     List<Integer> findOccupiedSeatIds(@Param("screeningId") Integer screeningId);
+
+    @Query("""
+    SELECT COUNT(t) > 0
+    FROM Ticket t
+    JOIN t.booking b
+    JOIN b.user u
+    JOIN t.screening s
+    JOIN s.film f
+    WHERE u.id = :userId
+    AND f.id = :filmId
+""")
+    boolean existsTicketForUserAndFilm(Integer userId, Integer filmId);
 }

@@ -2,7 +2,6 @@ package org.generation.italy.cinema.controllers;
 
 import org.generation.italy.cinema.dto.FilmDTO;
 import org.generation.italy.cinema.model.entities.Film;
-import org.generation.italy.cinema.model.repositories.abstractions.DirectorRepository;
 import org.generation.italy.cinema.model.services.abstractions.iFilmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -23,4 +23,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             String lastName,
             Pageable pageable
     );
+
+    Optional<User> findByUsername(String username);
 }
