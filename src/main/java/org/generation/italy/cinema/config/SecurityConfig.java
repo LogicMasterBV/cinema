@@ -56,8 +56,8 @@ public class SecurityConfig {
                 // Rotte pubbliche (login e register)
                 .requestMatchers("/api/auth/**").permitAll()
 
-                // Rotta pubblica per i suggerimenti
-                .requestMatchers("/api/film/suggested").permitAll()
+                // Tutte le rotte film pubbliche (lista + suggerimenti)
+                .requestMatchers("/api/film/**").permitAll()
 
                 // Solo ADMIN
                 .requestMatchers("/api/admin/**").hasRole("admin")
