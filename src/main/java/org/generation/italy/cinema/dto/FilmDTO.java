@@ -16,6 +16,7 @@ public class FilmDTO {
     private String description;
     private LocalDate releaseDate;
     private Integer ageRating;
+    private String imageUrl;
     private DirectorDTO director;
     private List<ScreeningDTO> screenings;
     private Set<ActorDTO> actors;
@@ -24,13 +25,14 @@ public class FilmDTO {
     public FilmDTO(){}
 
     public FilmDTO(Integer id, String title, Integer durationMinutes, String description, LocalDate releaseDate,
-                   Integer ageRating, DirectorDTO director, List<ScreeningDTO> screenings, Set<ActorDTO> actors, Set<GenreDTO> genres) {
+                   Integer ageRating, String imageUrl, DirectorDTO director, List<ScreeningDTO> screenings, Set<ActorDTO> actors, Set<GenreDTO> genres) {
         this.id = id;
         this.title = title;
         this.durationMinutes = durationMinutes;
         this.description = description;
         this.releaseDate = releaseDate;
         this.ageRating = ageRating;
+        this.imageUrl = imageUrl;
         this.director = director;
         this.screenings = screenings;
         this.actors = actors;
@@ -48,6 +50,7 @@ public class FilmDTO {
                 film.getDescription(),
                 film.getReleaseDate(),
                 film.getAgeRating(),
+                film.getImageUrl(),
                 film.getDirector() != null ? DirectorDTO.fromDirector(film.getDirector()) : null,
                 film.getScreenings() != null ? film.getScreenings().stream().map(ScreeningDTO::new).toList() : null,
                 film.getActors() != null ? film.getActors().stream().map(ActorDTO::fromEntity).collect(Collectors.toSet()): null,
@@ -64,6 +67,7 @@ public class FilmDTO {
         film.setDescription(this.description);
         film.setReleaseDate(this.releaseDate);
         film.setAgeRating(this.ageRating);
+        film.setImageUrl(this.imageUrl);
 
         // director
         if (this.director != null) {
@@ -160,6 +164,14 @@ public class FilmDTO {
 
     public void setAgeRating(Integer ageRating) {
         this.ageRating = ageRating;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public DirectorDTO getDirector() {
