@@ -1,8 +1,6 @@
 package org.generation.italy.cinema.model.services.abstractions;
 
 import org.generation.italy.cinema.model.entities.Film;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,5 +19,5 @@ public interface iFilmService {
     boolean updateFilmById(Film film);
     // ricerca per genere --repo
     List<Film> findFilmByDateScreening(LocalDate date);
-    Page<Film> globalSearch(String query, Pageable pageable);
+    List<Film> globalSearch(String query);
 }

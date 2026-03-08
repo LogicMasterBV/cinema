@@ -3,8 +3,6 @@ package org.generation.italy.cinema.controllers;
 import org.generation.italy.cinema.dto.FilmDTO;
 import org.generation.italy.cinema.model.entities.Film;
 import org.generation.italy.cinema.model.services.abstractions.iFilmService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,9 +53,11 @@ public class FilmController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<FilmDTO>> search(@RequestParam String q, Pageable pageable)  {
-        Page<FilmDTO> result = service.globalSearch(q, pageable)
-                .map(FilmDTO :: fromEntity);
+    public ResponseEntity<List<FilmDTO>> search(@RequestParam String q)  {
+        List<FilmDTO> result = service.globalSearch(q)
+                .stream()
+                .map(FilmDTO :: fromEntity)
+                .toList();
 
         return ResponseEntity.ok(result);
     }

@@ -1,7 +1,10 @@
 package org.generation.italy.cinema.model.services.implementations;
 
+import jakarta.transaction.Transactional;
 import org.generation.italy.cinema.model.entities.Hall;
+import org.generation.italy.cinema.model.entities.Seat;
 import org.generation.italy.cinema.model.repositories.abstractions.HallRepository;
+import org.generation.italy.cinema.model.repositories.abstractions.SeatRepository;
 import org.generation.italy.cinema.model.services.abstractions.iHallService;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +14,11 @@ import java.util.Optional;
 @Service
 public class HallServiceJpa implements iHallService {
     private final HallRepository repo;
+    private final SeatRepository seatRepo;
 
-    public HallServiceJpa(HallRepository repo) {
+    public HallServiceJpa(HallRepository repo, SeatRepository seatRepo) {
         this.repo = repo;
+        this.seatRepo = seatRepo;
     }
 
     @Override
@@ -27,8 +32,30 @@ public class HallServiceJpa implements iHallService {
     }
 
     @Override
+    @Transactional
     public Hall createHall(Hall hall) {
-        return repo.save(hall);
+        // If capacity is not provided or invalid, default to 100
+        if (hall.getCapacity() == null || hall.getCapacity() <= 0) {
+            hall.setCapacity(100);
+        }
+        
+        Hall savedHall = repo.save(hall);
+        
+        int capacity = savedHall.getCapacity();
+        int seatsPerRow = 10; // Fixed width of 10 seats per row
+
+        for (int i = 0; i < capacity; i++) {
+            int row = (i / seatsPerRow) + 1;
+            int number = (i % seatsPerRow) + 1;
+
+            Seat seat = new Seat();
+            seat.setHall(savedHall);
+            seat.setRowNumber(row);
+            seat.setSeatNumber(number);
+            seatRepo.save(seat);
+        }
+        
+        return savedHall;
     }
 
     @Override
