@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -45,8 +46,17 @@ public class FilmController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
-        return service.findFilmById(id).map(FilmDTO :: fromEntity)
-                .map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
+        return service.findFilmById(id).map(film -> {
+            FilmDTO dto = FilmDTO.fromEntity(film);
+            if (film.getImageUrl() != null && !film.getImageUrl().isEmpty()) {
+                String fileUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/api/film/images/")
+                        .path(film.getImageUrl())
+                        .toUriString();
+                dto.setImageUrl(fileUrl);
+            }
+            return dto;
+        }).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

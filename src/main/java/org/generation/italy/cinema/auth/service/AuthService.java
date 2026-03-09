@@ -39,7 +39,17 @@ public class AuthService {
         u.setLastName(req.lastName);
         u.setEmail(req.email);
         u.setPassword(passwordEncoder.encode(req.password));
-        u.setRole(UserRole.customer); // default, decidi tu
+        
+        if (req.role != null && !req.role.isEmpty()) {
+            try {
+                u.setRole(UserRole.valueOf(req.role.toLowerCase()));
+            } catch (IllegalArgumentException e) {
+                // Fallback to customer if role is invalid
+                u.setRole(UserRole.customer);
+            }
+        } else {
+            u.setRole(UserRole.customer);
+        }
 
         userRepository.save(u);
     }
