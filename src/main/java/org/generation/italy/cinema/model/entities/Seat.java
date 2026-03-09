@@ -1,5 +1,6 @@
 package org.generation.italy.cinema.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,12 @@ public class Seat {
     @Column(name = "seat_number", nullable = false)
     private Integer seatNumber;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_hall", nullable = false)
     private Hall hall;
 
     @OneToMany(mappedBy = "seat")
+    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
     public Seat() {}

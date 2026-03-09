@@ -1,6 +1,7 @@
 package org.generation.italy.cinema.model.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,11 +9,13 @@ import jakarta.persistence.*;
 public class BookedService {
 
     @EmbeddedId
+    @JsonIgnore
     private BookedServiceId id = new BookedServiceId();
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @MapsId("bookingId")
     @JoinColumn(name = "id_booking", nullable = false)
+    @JsonIgnore
     private Booking booking;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

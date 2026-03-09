@@ -1,8 +1,6 @@
 package org.generation.italy.cinema.model.repositories.abstractions;
 
 import org.generation.italy.cinema.model.entities.Film;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,7 +30,7 @@ public interface FilmRepository extends JpaRepository<Film, Integer> {
           OR LOWER(d.firstName) LIKE LOWER(CONCAT('%', :q, '%'))
           OR LOWER(d.lastName) LIKE LOWER(CONCAT('%', :q, '%'))
        """)
-    Page<Film> globalSearch(@Param("q") String query, Pageable pageable);
+    List<Film> globalSearch(@Param("q") String query);
 
 
 }

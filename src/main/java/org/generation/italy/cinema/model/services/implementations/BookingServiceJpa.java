@@ -1,6 +1,8 @@
 package org.generation.italy.cinema.model.services.implementations;
 
 import jakarta.transaction.Transactional;
+import org.generation.italy.cinema.dto.BookingDetailsDTO;
+import org.generation.italy.cinema.dto.SeatInfoDTO;
 import org.generation.italy.cinema.model.entities.Booking;
 import org.generation.italy.cinema.model.entities.Screening;
 import org.generation.italy.cinema.model.entities.User;
@@ -72,5 +74,30 @@ public class BookingServiceJpa implements iBookingService {
         }
         bookingRepo.deleteById(id);
         return true;
+    }
+    @Override
+    public List<BookingDetailsDTO> findBookingDetailsByUser(Integer userId) {
+
+        List<Booking> bookings = bookingRepo.findDetailedBookingsByUser(userId);
+
+        return bookings.stream().map(b -> {
+
+            List<SeatInfoDTO> seats = b.getTickets().stream()
+                    .map(t -> new SeatInfoDTO(
+                            t.getSeat().getId(),
+                            t.getSeat().getRowNumber(),
+                            t.getSeat().getSeatNumber()))
+                    .toList();
+
+            return new BookingDetailsDTO(
+                    b.getId(),
+                    b.getScreening().getFilm().getTitle(),
+                    b.getScreening().getScreeningDate(),
+                    b.getScreening().getScreeningTime(),
+                    b.getTotalPrice(),
+                    seats
+            );
+
+        }).toList();
     }
 }

@@ -32,6 +32,9 @@ public class Film {
     @Column(name = "age_rating")
     private Integer ageRating;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_director", nullable = false)
     private Director director;
@@ -77,6 +80,9 @@ public class Film {
 
     public Integer getAgeRating() { return ageRating; }
     public void setAgeRating(Integer ageRating) { this.ageRating = ageRating; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
     public Director getDirector() { return director; }
     public void setDirector(Director director) { this.director = director; }
