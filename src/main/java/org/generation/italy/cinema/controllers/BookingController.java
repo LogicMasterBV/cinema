@@ -1,6 +1,7 @@
 package org.generation.italy.cinema.controllers;
 
 import org.generation.italy.cinema.dto.BookingDTO;
+import org.generation.italy.cinema.dto.BookingDetailsDTO;
 import org.generation.italy.cinema.model.entities.Booking;
 import org.generation.italy.cinema.model.entities.Screening;
 import org.generation.italy.cinema.model.entities.User;
@@ -98,6 +99,14 @@ public class BookingController {
                 booking.getScreening().getId(),
                 booking.getTotalPrice(),
                 booking.getBookingDate()
+        );
+    }
+    @GetMapping("/user/{userId}/details")
+    public ResponseEntity<List<BookingDetailsDTO>> getBookingDetails(
+            @PathVariable Integer userId) {
+
+        return ResponseEntity.ok(
+                bookingService.findBookingDetailsByUser(userId)
         );
     }
 

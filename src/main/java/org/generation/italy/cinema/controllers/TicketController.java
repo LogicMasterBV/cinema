@@ -1,5 +1,6 @@
 package org.generation.italy.cinema.controllers;
 
+import org.generation.italy.cinema.dto.TicketCreateRequest;
 import org.generation.italy.cinema.model.entities.Ticket;
 import org.generation.italy.cinema.model.services.abstractions.iTicketService;
 import org.springframework.data.domain.Page;
@@ -75,16 +76,13 @@ public class TicketController {
     // POST create ticket
     // -------------------------------------------------
     @PostMapping
-    public ResponseEntity<Ticket> create(@RequestParam Integer bookingId,
-                                         @RequestParam Integer screeningId,
-                                         @RequestParam Integer seatId,
-                                         @RequestParam(required = false) BigDecimal price) {
+    public ResponseEntity<Ticket> create(@RequestBody TicketCreateRequest request) {
 
         Ticket created = ticketService.createTicket(
-                bookingId,
-                screeningId,
-                seatId,
-                price
+                request.getBookingId(),
+                request.getScreeningId(),
+                request.getSeatId(),
+                request.getPrice()
         );
 
         return ResponseEntity

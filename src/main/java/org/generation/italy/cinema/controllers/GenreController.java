@@ -7,27 +7,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/genres")
 public class GenreController {
-
     private final iGenreService genreService;
-
     public GenreController(iGenreService genreService) {
         this.genreService = genreService;
     }
 
     @GetMapping
     public ResponseEntity<List<GenreDTO>> getAll() {
-        List<GenreDTO> genres = genreService.findAll()
-                .stream()
+        List<Genre> genres = genreService.findAll();
+        List<GenreDTO> dtos = genres.stream()
                 .map(GenreDTO::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(genres);
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
- // Messi i DTO
+
     @GetMapping("/{id}")
     public ResponseEntity<GenreDTO> getById(@PathVariable Integer id) {
         Genre genre = genreService.findById(id);
@@ -35,7 +33,9 @@ public class GenreController {
     }
 
     @PostMapping
-    public ResponseEntity<GenreDTO> create(@RequestBody Genre genre) {
+    public ResponseEntity<GenreDTO> create(@RequestBody GenreDTO genreDTO) {
+        Genre genre = new Genre();
+        genre.setName(genreDTO.getName());
         Genre savedGenre = genreService.save(genre);
         return ResponseEntity.ok(GenreDTO.fromEntity(savedGenre));
     }
@@ -46,4 +46,3 @@ public class GenreController {
         return ResponseEntity.noContent().build();
     }
 }
-

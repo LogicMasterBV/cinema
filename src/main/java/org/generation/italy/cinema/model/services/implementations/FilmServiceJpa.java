@@ -4,8 +4,6 @@ import org.generation.italy.cinema.model.entities.Film;
 import org.generation.italy.cinema.model.repositories.abstractions.FilmRepository;
 import org.generation.italy.cinema.model.services.abstractions.iFilmService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -62,7 +60,7 @@ public class FilmServiceJpa implements iFilmService {
     }
 
     @Override
-    public Page<Film> globalSearch(String query, Pageable pageable) {
-        return repository.globalSearch(query, pageable);
+    public List<Film> globalSearch(String query) {
+        return repository.globalSearch(query);
     }
 }

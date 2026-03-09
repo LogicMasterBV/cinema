@@ -1,5 +1,6 @@
 package org.generation.italy.cinema.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,20 +23,23 @@ public class Ticket {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY) // JPA aggiorna la relazione solo dal lato owner! Booking = padre, Ticket = figlio, Chi decide chi è il padre? Il documento del figlio.
     @JoinColumn(name = "id_booking", nullable = false) // -------------------------BIDIREZIONALE CON BOOKING -> Lato owner verso Booking, ecco perchè devo gestire i biglietti in booking
+    @JsonIgnore
     private Booking booking;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_screening", nullable = false)
+    @JsonIgnore
     private Screening screening;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_seat", nullable = false)
+    @JsonIgnore
     private Seat seat;
 
     @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private BigDecimal price;
 
-    @Column(name = "date", insertable = false, updatable = false, nullable = false)
+    @Column(name = "date", updatable = false, nullable = false)
     private LocalDateTime date;
 
     public Ticket() {}

@@ -1,6 +1,7 @@
 package org.generation.italy.cinema.model.services.abstractions;
 
 import org.generation.italy.cinema.dto.BookingDTO;
+import org.generation.italy.cinema.dto.BookingDetailsDTO;
 import org.generation.italy.cinema.model.entities.Booking;
 
 import java.util.List;
@@ -19,4 +20,5 @@ public interface iBookingService {
     Booking create(Booking booking);
 
     boolean deleteById(Integer id);
+    List<BookingDetailsDTO> findBookingDetailsByUser(Integer userId);
 }

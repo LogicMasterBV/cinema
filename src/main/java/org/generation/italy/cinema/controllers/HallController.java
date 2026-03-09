@@ -40,4 +40,13 @@ public class HallController {
         Hall saved = service.createHall(HallDTO.toEntity(dto));
         return ResponseEntity.ok(HallDTO.fromEntity(saved));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteHallById(@PathVariable Integer id) {
+        if (service.deleteHallById(id)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
